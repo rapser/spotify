@@ -2,7 +2,7 @@
 //  APICaller.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import Foundation
@@ -19,7 +19,9 @@ final class APICaller {
     
     public func getCurrentUserProfile(completion: @escaping (Result<UserProfile, Error>) -> Void) {
         
-        createRequest(with: URL(string: Constants.baseAPIURL + "/me"), type: .GET) { (request) in
+        createRequest(with: URL(string: Constants.baseAPIURL + "/me"), 
+                      type: .GET)
+        { (request) in
             
             let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
                 
@@ -29,12 +31,13 @@ final class APICaller {
                 }
                 
                 do{
-                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+                    let result = try JSONDecoder().decode(UserProfile.self, from: data)
                     print(result)
+                    completion(.success(result))
                     
-                    let jsonData = try JSONSerialization.data(withJSONObject: result, options:.prettyPrinted)
-                    let jsonString = String(data: jsonData, encoding: String.Encoding.ascii)!
-                    print(jsonString)
+//                    let jsonData = try JSONSerialization.data(withJSONObject: result, options:.prettyPrinted)
+//                    let jsonString = String(data: jsonData, encoding: String.Encoding.ascii)!
+//                    print(jsonString)
                     
                 } catch {
                     completion(.failure(error))
@@ -64,7 +67,8 @@ final class APICaller {
             guard let apiURL = url else {return}
             var request = URLRequest(url: apiURL)
             
-            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+            request.setValue("Bearer \(token)", 
+                             forHTTPHeaderField: "Authorization")
             request.httpMethod = type.rawValue
             request.timeoutInterval = 30
             completion(request)

@@ -2,7 +2,7 @@
 //  AuthViewController.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import UIKit
@@ -13,15 +13,11 @@ class AuthViewController: UIViewController {
     private let webView: WKWebView = {
         
         let prefs = WKWebpagePreferences()
-        if #available(iOS 14.0, *) {
-            prefs.allowsContentJavaScript = true
-        } else {
-            // Fallback on earlier versions
-        }
-        
+        prefs.allowsContentJavaScript = true
         let config = WKWebViewConfiguration()
         config.defaultWebpagePreferences = prefs
-        let webView = WKWebView(frame: .zero, configuration: config)
+        let webView = WKWebView(frame: .zero, 
+                                configuration: config)
         
         return webView
     }()
@@ -30,10 +26,10 @@ class AuthViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = "Sign In"
-        
         view.backgroundColor = .systemBackground
+        
         webView.navigationDelegate = self
         view.addSubview(webView)
         
@@ -49,7 +45,6 @@ class AuthViewController: UIViewController {
         
         webView.frame = view.bounds
     }
-
 }
 
 extension AuthViewController: WKNavigationDelegate {

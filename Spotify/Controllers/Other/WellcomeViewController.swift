@@ -2,13 +2,13 @@
 //  WellcomeViewController.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import UIKit
 
 class WellcomeViewController: UIViewController {
-    
+
     private let signInButton: UIButton = {
         let button = UIButton()
         
@@ -17,21 +17,23 @@ class WellcomeViewController: UIViewController {
         button.setTitleColor(.blue, for: .normal)
         return button
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         title = "Spotify"
         view.backgroundColor = .systemGreen
         view.addSubview(signInButton)
         signInButton.addTarget(self, action: #selector(didTapSignIn), for: .touchUpInside)
     }
-
-
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        signInButton.frame = CGRect(x: 20, y: view.height - 50 - view.safeAreaInsets.bottom, width: view.width - 40, height: 50)
+        signInButton.frame = CGRect(x: 20,
+                                    y: view.height - 50 - view.safeAreaInsets.bottom,
+                                    width: view.width - 40,
+                                    height: 50)
     }
     
     @objc func didTapSignIn() {
@@ -51,17 +53,20 @@ class WellcomeViewController: UIViewController {
     private func handleSignIn(success: Bool) {
         
         guard success else {
+            let alert = UIAlertController(title: "ops", 
+                                          message: "Paso algun error cuando te logeabas",
+                                          preferredStyle: .alert)
             
-            let alert = UIAlertController(title: "ops", message: "Paso algun error cuando te logeabas", preferredStyle: .alert)
-            
-            alert.addAction(UIAlertAction(title: "Dismiss", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: "Dismiss", 
+                                          style: .cancel,
+                                          handler: nil))
             present(alert, animated: true)
             return
-            
         }
         
         let main = TabBarViewController()
         main.modalPresentationStyle = .fullScreen
         present(main, animated: true)
     }
+    
 }

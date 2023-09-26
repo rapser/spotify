@@ -2,14 +2,13 @@
 //  AppDelegate.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
 
     var window: UIWindow?
 
@@ -19,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if AuthManager.shared.isSignedIn {
             window.rootViewController = TabBarViewController()
+
         }else {
             let navVC = UINavigationController(rootViewController: WellcomeViewController())
             navVC.navigationBar.prefersLargeTitles = true

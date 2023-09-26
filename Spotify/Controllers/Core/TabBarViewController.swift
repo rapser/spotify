@@ -2,16 +2,18 @@
 //  TabBarViewController.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
+import Foundation
 import UIKit
 
 class TabBarViewController: UITabBarController {
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let vc1 = HomeViewController()
         let vc2 = SearchViewController()
         let vc3 = LibraryViewController()
@@ -29,15 +31,14 @@ class TabBarViewController: UITabBarController {
         let nav3 = UINavigationController(rootViewController: vc3)
         
         nav1.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house"), tag: 1)
-        nav2.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 2)
-        nav3.tabBarItem = UITabBarItem(title: "Library", image: UIImage(systemName: "music.note.list"), tag: 3)
-
+        nav2.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
+        nav3.tabBarItem = UITabBarItem(title: "Library", image: UIImage(systemName: "music.note"), tag: 1)
         
         nav1.navigationBar.prefersLargeTitles = true
         nav2.navigationBar.prefersLargeTitles = true
         nav3.navigationBar.prefersLargeTitles = true
         
-        setViewControllers([nav1, nav2, nav3], animated: false)
+        setViewControllers([nav1,nav2,nav3], animated: false)
     }
 
 }

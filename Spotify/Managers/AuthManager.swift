@@ -2,7 +2,7 @@
 //  AuthManager.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import Foundation
@@ -21,9 +21,7 @@ final class AuthManager {
         static let scopes = "user-read-private%20playlist-modify-public%20playlist-modify-private%20playlist-read-private%20user-follow-read%20user-library-modify%20user-library-read%20user-read-email"
     }
     
-    private init() {
-        
-    }
+    private init(){ }
     
     public var signInURL: URL? {
         let base = "https://accounts.spotify.com/authorize"
@@ -62,14 +60,18 @@ final class AuthManager {
         guard let url = URL(string: Constants.tokenAPIURL) else {return}
         
         var components = URLComponents()
-        components.queryItems = [ URLQueryItem(name: "grant_type", value: "authorization_code"),
-                                  URLQueryItem(name: "code", value: code),
-                                  URLQueryItem(name: "redirect_uri", value: Constants.redirectURI)
+        components.queryItems = [ URLQueryItem(name: "grant_type",
+                                               value: "authorization_code"),
+                                  URLQueryItem(name: "code",
+                                               value: code),
+                                  URLQueryItem(name: "redirect_uri",
+                                               value: Constants.redirectURI)
         ]
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/x-www-form-urlencoded",
+                         forHTTPHeaderField: "Content-Type")
         
         let basicToken = Constants.clientID + ":" + Constants.clientSecret
         let data = basicToken.data(using: .utf8)
@@ -78,7 +80,8 @@ final class AuthManager {
             return
         }
         
-        request.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(base64String)",
+                         forHTTPHeaderField: "Authorization")
         request.httpBody = components.query?.data(using: .utf8)
         
         let task = URLSession.shared.dataTask(with: request) {[weak self] (data, _, error) in
@@ -143,13 +146,16 @@ final class AuthManager {
         refreshingToken = true
         
         var components = URLComponents()
-        components.queryItems = [ URLQueryItem(name: "grant_type", value: "refresh_token"),
-                                  URLQueryItem(name: "refresh_token", value: refreshToken)
+        components.queryItems = [ URLQueryItem(name: "grant_type", 
+                                               value: "refresh_token"),
+                                  URLQueryItem(name: "refresh_token", 
+                                               value: refreshToken)
         ]
         
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.setValue("application/x-www-form-urlencoded", 
+                         forHTTPHeaderField: "Content-Type")
         
         let basicToken = Constants.clientID + ":" + Constants.clientSecret
         let data = basicToken.data(using: .utf8)
@@ -158,7 +164,8 @@ final class AuthManager {
             return
         }
         
-        request.setValue("Basic \(base64String)", forHTTPHeaderField: "Authorization")
+        request.setValue("Basic \(base64String)", 
+                         forHTTPHeaderField: "Authorization")
         request.httpBody = components.query?.data(using: .utf8)
         
         let task = URLSession.shared.dataTask(with: request) {[weak self] (data, _, error) in
@@ -188,12 +195,16 @@ final class AuthManager {
     
     private func cacheToken(result: AuthResponse) {
         
-        UserDefaults.standard.setValue(result.access_token, forKey: "access_token")
+        UserDefaults.standard.setValue(result.access_token,
+                                       forKey: "access_token")
         
         if let refresh_token = result.refresh_token {
-            UserDefaults.standard.setValue(refresh_token, forKey: "refresh_token")
+            UserDefaults.standard.setValue(refresh_token,
+                                           forKey: "refresh_token")
         }
         
-        UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)), forKey: "expirationDate")
+        UserDefaults.standard.setValue(Date().addingTimeInterval(TimeInterval(result.expires_in)),
+                                       forKey: "expirationDate")
     }
 }
+

@@ -2,7 +2,7 @@
 //  UserProfile.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import Foundation
@@ -17,25 +17,41 @@ struct UserProfile: Codable {
     let followers: Followers?
     let country, email: String?
     let externalUrls: ExternalUrls?
+    
+    enum CodingKeys: String, CodingKey {
+        case id
+        case explicitContent = "explicit_content"
+        case uri
+        case href
+        case product
+        case type
+        case displayName = "display_name"
+        case images
+        case followers
+        case country
+        case email
+        case externalUrls = "external_urls"
+    }
 }
 
-// MARK: - ExplicitContent
 struct ExplicitContent: Codable {
     let filterLocked, filterEnabled: Bool?
+    
+    enum CodingKeys: String, CodingKey {
+        case filterLocked = "filter_locked"
+        case filterEnabled = "filter_enabled"
+    }
 }
 
-// MARK: - ExternalUrls
 struct ExternalUrls: Codable {
     let spotify: String?
 }
 
-// MARK: - Followers
 struct Followers: Codable {
     let total: Int?
     let href: String?
 }
 
-// MARK: - Image
 struct UserImage:Codable {
     let url: String?
     let width, height: Double?
