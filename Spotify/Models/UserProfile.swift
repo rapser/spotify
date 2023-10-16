@@ -13,7 +13,7 @@ struct UserProfile: Codable {
     let uri: String?
     let href: String?
     let product, type, displayName: String?
-    let images: [UserImage]?
+    let images: [APIImage]?
     let followers: Followers?
     let country, email: String?
     let externalUrls: ExternalUrls?
@@ -50,9 +50,4 @@ struct ExternalUrls: Codable {
 struct Followers: Codable {
     let total: Int?
     let href: String?
-}
-
-struct UserImage:Codable {
-    let url: String?
-    let width, height: Double?
 }
