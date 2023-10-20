@@ -32,7 +32,6 @@ final class APICaller {
                 
                 do{
                     let result = try JSONDecoder().decode(UserProfile.self, from: data)
-                    print(result)
                     completion(.success(result))
                     
                 } catch {
@@ -47,7 +46,7 @@ final class APICaller {
     
     public func getNewReleases(completion: @escaping ((Result<NewReleasesResponse,Error>)) -> Void) {
         
-        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?limit=1"), type: .GET) { request in
+        createRequest(with: URL(string: Constants.baseAPIURL + "/browse/new-releases?limit=50"), type: .GET) { request in
             
             let task = URLSession.shared.dataTask(with: request) { data, _, error in
                 
@@ -58,7 +57,6 @@ final class APICaller {
                 
                 do {
                     let result = try JSONDecoder().decode(NewReleasesResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                     
                 }catch {
@@ -83,7 +81,6 @@ final class APICaller {
                 
                 do {
                     let result = try JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                 }catch {
                     completion(.failure(error))
@@ -95,7 +92,7 @@ final class APICaller {
         }
     }
     
-    public func getRecomendations(genres: Set<String>, completion: @escaping ((Result<String,Error>)) -> Void) {
+    public func getRecomendations(genres: Set<String>, completion: @escaping ((Result<RecomendationsResponse,Error>)) -> Void) {
         
         let seeds = genres.joined(separator: ",")
         
@@ -109,10 +106,15 @@ final class APICaller {
                 }
                 
                 do {
-                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-//                    JSONDecoder().decode(FeaturedPlaylistsResponse.self, from: data)
-                    print(result)
-//                    completion(.success(result))
+//                    let result = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                    if let jsonData = try? JSONSerialization.data(withJSONObject: result, options: .prettyPrinted),
+//                       let jsonString = String(data: jsonData, encoding: .utf8) {
+//                        print(jsonString)
+//                    } else {
+//                        print("No se pudo convertir el JSON en una cadena.")
+//                    }
+                    let result = try JSONDecoder().decode(RecomendationsResponse.self, from: data)
+                    completion(.success(result))
                 }catch {
                     completion(.failure(error))
                 }
@@ -121,7 +123,7 @@ final class APICaller {
         }
     }
     
-    public func getRecomendationsGenres(completion: @escaping ((Result<RecommendedGenresResponse,Error>)) -> Void) {
+    public func getRecommendedGenres(completion: @escaping ((Result<RecommendedGenresResponse,Error>)) -> Void) {
         
         createRequest(with: URL(string: Constants.baseAPIURL + "/recommendations/available-genre-seeds"), type: .GET) { request in
             
@@ -135,7 +137,6 @@ final class APICaller {
                 do {
                     let result =
                     try JSONDecoder().decode(RecommendedGenresResponse.self, from: data)
-                    print(result)
                     completion(.success(result))
                 }catch {
                     completion(.failure(error))
