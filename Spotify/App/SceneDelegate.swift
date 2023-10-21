@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import UIKit
@@ -13,11 +13,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
- 
-        guard let windowsScene = (scene as? UIWindowScene) else { return }
+
+        guard let windowScene = (scene as? UIWindowScene) else { return }
         
-        let window = UIWindow(windowScene: windowsScene)
+        let window = UIWindow(windowScene: windowScene)
         if AuthManager.shared.isSignedIn {
+            AuthManager.shared.refreshIfNeeded(completion: nil)
             window.rootViewController = TabBarViewController()
         }else {
             let navVC = UINavigationController(rootViewController: WellcomeViewController())

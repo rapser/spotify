@@ -2,14 +2,13 @@
 //  AppDelegate.swift
 //  Spotify
 //
-//  Created by miguel tomairo on 3/12/21.
+//  Created by Miguel Angel Tomairo Mendez on 25-09-23.
 //
 
 import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
 
     var window: UIWindow?
 
@@ -18,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let window = UIWindow(frame: UIScreen.main.bounds)
         
         if AuthManager.shared.isSignedIn {
+            AuthManager.shared.refreshIfNeeded(completion: nil)
             window.rootViewController = TabBarViewController()
         }else {
             let navVC = UINavigationController(rootViewController: WellcomeViewController())
